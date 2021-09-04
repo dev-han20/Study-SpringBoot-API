@@ -9,6 +9,7 @@ HELP.md
 *.html
 *.css
 *.js
+*.map
 
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
