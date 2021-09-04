@@ -6,6 +6,9 @@ out/
 *.iml
 *.ipr
 HELP.md
+*.html
+*.css
+*.js
 
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
