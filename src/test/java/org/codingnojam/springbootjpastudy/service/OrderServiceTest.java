@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -31,6 +33,11 @@ class OrderServiceTest {
         Member member = new Member();
         member.setName("코딩노잼");
         member.setAddress(new Address("판교", "떙땡로", "22424"));
+
+        Member member2 = new Member();
+        member2.setName("아이유");
+        member2.setAddress(new Address("서울", "떙땡로", "22424"));
+        em.persist(member2);
         em.persist(member);
 
         Book book = new Book();
@@ -40,13 +47,26 @@ class OrderServiceTest {
         em.persist(book);
 
         Long orderId = orderService.order(member.getId(), book.getId(), 3);
-        Order findOrder = orderService.findById(orderId);
+        Long orderId2 = orderService.order(member2.getId(), book.getId(), 5);
 
-        Assertions.assertThat(findOrder.getStatus()).isEqualTo(OrderStatus.ORDER);
-        Assertions.assertThat(findOrder.getOrderItems().size()).isEqualTo(1);
-        Assertions.assertThat(findOrder.getTotalPrice()).isEqualTo(book.getPrice() * 3);
-//        Assertions.assertThat(book.getStockQuantity()).isEqualTo(9); 에러
-        Assertions.assertThat(book.getStockQuantity()).isEqualTo(12);
+        em.flush();
+        System.out.println("#####################################");
+
+        List<Member> list = em.createQuery("select m from Member m join m.oders").getResultList();
+
+        System.out.println(list.size());
+        for (Member member1 : list) {
+            System.out.println("member1 = " + member1.getOders().get(0));
+        }
+
+        System.out.println("#####################################");
+//        Order findOrder = orderService.findById(orderId);
+//
+//        Assertions.assertThat(findOrder.getStatus()).isEqualTo(OrderStatus.ORDER);
+//        Assertions.assertThat(findOrder.getOrderItems().size()).isEqualTo(1);
+//        Assertions.assertThat(findOrder.getTotalPrice()).isEqualTo(book.getPrice() * 3);
+////        Assertions.assertThat(book.getStockQuantity()).isEqualTo(9); 에러
+//        Assertions.assertThat(book.getStockQuantity()).isEqualTo(12);
 
     }
 
