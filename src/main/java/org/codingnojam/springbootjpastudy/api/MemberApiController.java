@@ -1,15 +1,15 @@
 package org.codingnojam.springbootjpastudy.api;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.codingnojam.springbootjpastudy.domain.Address;
 import org.codingnojam.springbootjpastudy.domain.Member;
 import org.codingnojam.springbootjpastudy.service.MemberService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,14 +33,32 @@ public class MemberApiController {
         return new CreateMemberResponse(id);
     }
 
+    @PutMapping("api/v2/members/{id}")
+    public UpdateMemberResponse updateMember(@PathVariable("id") Long id, @RequestBody @Valid UpdateMemberRequest request) {
+        memberService.update(id, request.getName());
+        Member member = memberService.findMember(id);
+        return new UpdateMemberResponse(member.getId(), member.getName());
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class UpdateMemberResponse {
+        private Long id;
+        private String name;
+    }
+
+    @Data
+    static class UpdateMemberRequest {
+        @NotEmpty
+        private String name;
+    }
+
     @Data
     static class CreateMemberRequest {
         private String name;
         private String city;
         private String street;
         private String zipcode;
-
-
     }
 
     @Data
