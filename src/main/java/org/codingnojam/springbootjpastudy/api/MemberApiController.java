@@ -19,24 +19,34 @@ public class MemberApiController {
 
     private final MemberService memberService;
 
+    /**
+     * 멤버 등록 API ver.1
+     * 엔티티 그대로 사용
+     */
     @PostMapping("api/v1/members")
     public CreateMemberResponse saveMemberV1(@RequestBody @Valid Member member) {
         Long id = memberService.join(member);
         return new CreateMemberResponse(id);
     }
 
+    /**
+     * 멤버 등록 API ver.2
+     * 엔티티 대신 DTO사용
+     */
     @PostMapping("api/v2/members")
     public CreateMemberResponse saveMemberV2(@RequestBody @Valid CreateMemberRequest request) {
         Member member = new Member();
-        if (request.getCity() != null) {
-            Address address = new Address(request.getCity(), request.getStreet(), request.getZipcode());
-            member.setAddress(address);
-        }
+        Address address = new Address(request.getCity(), request.getStreet(), request.getZipcode());
+        member.setAddress(address);
         member.setName(request.getName());
         Long id = memberService.join(member);
         return new CreateMemberResponse(id);
     }
 
+    /**
+     * 멤버 수정 API ver.2
+     * 엔티티 대신 DTO사용
+     */
     @PutMapping("api/v2/members/{id}")
     public UpdateMemberResponse updateMember(@PathVariable("id") Long id, @RequestBody @Valid UpdateMemberRequest request) {
         memberService.update(id, request.getName());
