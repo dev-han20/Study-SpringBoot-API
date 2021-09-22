@@ -56,7 +56,7 @@ public class MemberApiController {
                         m.getAddress().getStreet(),
                         m.getAddress().getStreet()))
                 .collect(Collectors.toList());
-        return new GetMemberResponse(getMembers, getMembers.size());
+        return new GetMemberResponse<List<GetMemberDto>>(getMembers, getMembers.size());
     }
 
     @Data
