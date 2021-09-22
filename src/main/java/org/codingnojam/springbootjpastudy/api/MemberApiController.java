@@ -28,8 +28,10 @@ public class MemberApiController {
     @PostMapping("api/v2/members")
     public CreateMemberResponse saveMemberV2(@RequestBody @Valid CreateMemberRequest request) {
         Member member = new Member();
-        Address address = new Address(request.getCity(), request.getStreet(), request.getZipcode());
-        member.setAddress(address);
+        if (request.getCity() != null) {
+            Address address = new Address(request.getCity(), request.getStreet(), request.getZipcode());
+            member.setAddress(address);
+        }
         member.setName(request.getName());
         Long id = memberService.join(member);
         return new CreateMemberResponse(id);
