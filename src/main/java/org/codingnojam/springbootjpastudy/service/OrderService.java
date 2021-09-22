@@ -52,4 +52,8 @@ public class OrderService {
     public List<Order> findAll() {
         return orderRepository.findAll();
     }
+
+    public List<Order> findAllWithMemberDelivery() {
+        return orderRepository.findAllWithMemberDelivery();
+    }
 }

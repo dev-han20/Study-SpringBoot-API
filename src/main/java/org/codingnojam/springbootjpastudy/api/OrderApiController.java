@@ -19,7 +19,7 @@ public class OrderApiController {
 
     private final OrderService orderService;
 
-    @GetMapping("api/v1/orders")
+    @GetMapping("/api/v1/orders")
     public List<Order> ordersV1() {
         List<Order> all = orderService.findAll();
         for (Order order : all) {
@@ -29,13 +29,22 @@ public class OrderApiController {
         return all;
     }
 
-    @GetMapping("api/v2/orders")
+    @GetMapping("/api/v2/orders")
     public List<OrderDto> ordersV2() {
         return orderService.findAll()
                 .stream()
                 .map(o -> new OrderDto(o))
                 .collect(Collectors.toList());
     }
+
+    @GetMapping("/api/v3/orders")
+    public List<OrderDto> ordersV3() {
+        return orderService.findAllWithMemberDelivery()
+                .stream()
+                .map(o -> new OrderDto(o))
+                .collect(Collectors.toList());
+    }
+
 
     @Data
     static class OrderDto {
