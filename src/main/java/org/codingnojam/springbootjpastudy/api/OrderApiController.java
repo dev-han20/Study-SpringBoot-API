@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.codingnojam.springbootjpastudy.domain.Address;
 import org.codingnojam.springbootjpastudy.domain.Order;
 import org.codingnojam.springbootjpastudy.domain.OrderStatus;
+import org.codingnojam.springbootjpastudy.repository.OrderQueryDto;
+import org.codingnojam.springbootjpastudy.repository.OrderRepository;
 import org.codingnojam.springbootjpastudy.service.OrderService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 public class OrderApiController {
 
     private final OrderService orderService;
+    private final OrderRepository orderRepository;
 
     @GetMapping("/api/v1/orders")
     public List<Order> ordersV1() {
@@ -43,6 +46,11 @@ public class OrderApiController {
                 .stream()
                 .map(o -> new OrderDto(o))
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/api/v4/orders")
+    public List<OrderQueryDto> ordersV4() {
+        return orderRepository.findOrderDtos();
     }
 
 

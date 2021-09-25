@@ -33,4 +33,10 @@ public class OrderRepository {
                 "join fetch o.delivery d", Order.class)
                 .getResultList();
     }
+
+    public List<OrderQueryDto> findOrderDtos() {
+        return em.createQuery("select new org.codingnojam.springbootjpastudy.repository.OrderQueryDto(o.id, m.name, o.orderDate, o.status, d.address) " +
+                "from Order o join o.member m join o.delivery d", OrderQueryDto.class)
+                .getResultList();
+    }
 }
