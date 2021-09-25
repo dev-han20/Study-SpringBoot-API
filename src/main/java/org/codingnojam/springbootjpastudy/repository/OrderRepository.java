@@ -2,6 +2,7 @@ package org.codingnojam.springbootjpastudy.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.codingnojam.springbootjpastudy.domain.Order;
+import org.codingnojam.springbootjpastudy.repository.orderqeury.OrderQueryDto;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -34,9 +35,4 @@ public class OrderRepository {
                 .getResultList();
     }
 
-    public List<OrderQueryDto> findOrderDtos() {
-        return em.createQuery("select new org.codingnojam.springbootjpastudy.repository.OrderQueryDto(o.id, m.name, o.orderDate, o.status, d.address) " +
-                "from Order o join o.member m join o.delivery d", OrderQueryDto.class)
-                .getResultList();
-    }
 }

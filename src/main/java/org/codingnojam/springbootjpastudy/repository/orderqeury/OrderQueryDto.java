@@ -1,4 +1,4 @@
-package org.codingnojam.springbootjpastudy.repository;
+package org.codingnojam.springbootjpastudy.repository.orderqeury;
 
 import lombok.Data;
 import org.codingnojam.springbootjpastudy.domain.Address;
