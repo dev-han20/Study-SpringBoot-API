@@ -27,6 +27,13 @@ public class OrderCollectionApiController {
                 .collect(Collectors.toList());
     }
 
+    // 페이징을 시도하면 메모리에서 페이징을 하므로 페이징 사용 하면 안됨
+    @GetMapping("/api/collection/v2/orders")
+    public List<OrderCollectionDto> ordersV2() {
+        List<Order> orders = orderRepository.findAllWithOrderItem();
+        return orders.stream().map(o -> new OrderCollectionDto(o)).collect(Collectors.toList());
+    }
+
     @Data
     static class OrderCollectionDto {
         private Long id;
