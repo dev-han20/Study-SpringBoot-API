@@ -7,6 +7,7 @@ import org.codingnojam.springbootjpastudy.domain.Order;
 import org.codingnojam.springbootjpastudy.domain.OrderItem;
 import org.codingnojam.springbootjpastudy.domain.OrderStatus;
 import org.codingnojam.springbootjpastudy.repository.OrderRepository;
+import org.hibernate.annotations.BatchSize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,10 +28,17 @@ public class OrderCollectionApiController {
                 .collect(Collectors.toList());
     }
 
-    // 페이징을 시도하면 메모리에서 페이징을 하므로 페이징 사용 하면 안됨
+
     @GetMapping("/api/collection/v2/orders")
     public List<OrderCollectionDto> ordersV2() {
         List<Order> orders = orderRepository.findAllWithOrderItem();
+        return orders.stream().map(o -> new OrderCollectionDto(o)).collect(Collectors.toList());
+    }
+
+    //@BatchSize(size = 100)
+    @GetMapping("/api/collection/v3/orders")
+    public List<OrderCollectionDto> orderV3() {
+        List<Order> orders = orderRepository.findAllWithMemberDelivery();
         return orders.stream().map(o -> new OrderCollectionDto(o)).collect(Collectors.toList());
     }
 

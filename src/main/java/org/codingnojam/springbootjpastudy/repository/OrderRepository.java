@@ -35,6 +35,7 @@ public class OrderRepository {
                 .getResultList();
     }
 
+    // 페이징을 시도하면 메모리에서 페이징을 하므로 페이징 사용 하면 안됨
     public List<Order> findAllWithOrderItem() {
         return em.createQuery("select distinct o from Order o " +
                 "join fetch o.member m " +
