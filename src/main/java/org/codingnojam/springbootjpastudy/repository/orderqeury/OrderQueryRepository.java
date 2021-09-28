@@ -18,11 +18,23 @@ public class OrderQueryRepository {
                 .getResultList();
     }
 
-    public List<OrderCollectionQueryDto> orderCollectionQueryDtos() {
-        return em.createQuery("select new org.codingnojam.springbootjpastudy.repository.orderqeury.OrderCollectionQueryDto " +
+    public List<OrderCollectionQueryDto> findOrderCollections() {
+        List<OrderCollectionQueryDto> list = findOrders();
+        list.forEach(o -> o.setOrderItems(findOrderItems(o.getId())));
+        return list;
+    }
+
+    public List<OrderCollectionQueryDto> findOrders() {
+        return em.createQuery("select new org.codingnojam.springbootjpastudy.repository.orderqeury.OrderCollectionQueryDto(" +
+                "o.id, m.name, o.orderDate, o.status, d.address) " +
                 "from Order o " +
                 "join o.member m " +
                 "join o.delivery d"  , OrderCollectionQueryDto.class).getResultList();
+    }
+
+    public List<OrderItemQueryDto> findOrderItems(Long orderId) {
+        return em.createQuery("select new org.codingnojam.springbootjpastudy.repository.orderqeury.OrderItemQueryDto(oi.item.name, oi.count, oi.orderPrice)" +
+                "from OrderItem oi join oi.item i where oi.order.id = :orderId", OrderItemQueryDto.class).setParameter("orderId",orderId).getResultList();
     }
 
 

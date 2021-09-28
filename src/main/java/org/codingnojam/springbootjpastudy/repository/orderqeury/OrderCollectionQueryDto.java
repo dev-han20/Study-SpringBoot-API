@@ -17,7 +17,7 @@ public class OrderCollectionQueryDto {
     private LocalDateTime orderDate;
     private OrderStatus orderStatus;
     private Address address;
-    private List<OrderItemQueryDto> orderItemQueryDtos;
+    private List<OrderItemQueryDto> orderItems;
 
     public OrderCollectionQueryDto(Long id, String name, LocalDateTime orderDate, OrderStatus orderStatus, Address address) {
         this.id = id;
