@@ -7,6 +7,7 @@ import org.codingnojam.springbootjpastudy.domain.Order;
 import org.codingnojam.springbootjpastudy.domain.OrderItem;
 import org.codingnojam.springbootjpastudy.domain.OrderStatus;
 import org.codingnojam.springbootjpastudy.repository.OrderRepository;
+import org.codingnojam.springbootjpastudy.repository.orderqeury.OrderCollectionQueryDto;
 import org.hibernate.annotations.BatchSize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,6 +41,11 @@ public class OrderCollectionApiController {
     public List<OrderCollectionDto> orderV3() {
         List<Order> orders = orderRepository.findAllWithMemberDelivery();
         return orders.stream().map(o -> new OrderCollectionDto(o)).collect(Collectors.toList());
+    }
+
+    @GetMapping("/api/collection/v4/orders")
+    public List<OrderCollectionQueryDto> ordersV4(){
+
     }
 
     @Data

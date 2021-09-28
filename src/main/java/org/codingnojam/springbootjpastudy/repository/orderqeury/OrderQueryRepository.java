@@ -17,4 +17,13 @@ public class OrderQueryRepository {
                         "from Order o join o.member m join o.delivery d", OrderQueryDto.class)
                 .getResultList();
     }
+
+    public List<OrderCollectionQueryDto> orderCollectionQueryDtos() {
+        return em.createQuery("select new org.codingnojam.springbootjpastudy.repository.orderqeury.OrderCollectionQueryDto " +
+                "from Order o " +
+                "join o.member m " +
+                "join o.delivery d"  , OrderCollectionQueryDto.class).getResultList();
+    }
+
+
 }
