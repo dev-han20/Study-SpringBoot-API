@@ -38,6 +38,12 @@ public class OrderCollectionApiController {
         return orders.stream().map(o -> new OrderCollectionDto(o)).collect(Collectors.toList());
     }
 
+    @GetMapping("/api/collection/v2/orders/2")
+    public List<OrderCollectionDto> ordersV2JoinTest() {
+        List<Order> orders = orderRepository.findAllWithOrderItemJoinTest();
+        return orders.stream().map(o -> new OrderCollectionDto(o)).collect(Collectors.toList());
+    }
+
     //@BatchSize(size = 100)
     @GetMapping("/api/collection/v3/orders")
     public List<OrderCollectionDto> orderV3() {
@@ -49,6 +55,12 @@ public class OrderCollectionApiController {
     public List<OrderCollectionQueryDto> ordersV4(){
         return orderQueryRepository.findOrderCollections();
     }
+
+    @GetMapping("/api/collection/v5/orders")
+    public List<OrderCollectionQueryDto> ordersV5() {
+        return orderQueryRepository.findOrderCollectionsOptimize();
+    }
+
 
     @Data
     static class OrderCollectionDto {
