@@ -24,6 +24,8 @@ public class Developer {
 
 	private int age;
 
+	private String job;
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Company company;
 }

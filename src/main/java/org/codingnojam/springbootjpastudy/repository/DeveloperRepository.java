@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class DeveloperRepository {
 
-	private final EntityManager	em;
+	private final EntityManager em;
 
 	public Developer findOneById(Long id) {
 		return em.find(Developer.class, id);
