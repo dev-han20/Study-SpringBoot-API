@@ -19,8 +19,9 @@ public class DeveloperRepository {
 		return em.find(Developer.class, id);
 	}
 
-	public void save(Developer developer) {
+	public Long save(Developer developer) {
 		em.persist(developer);
+		return developer.getId();
 	}
 
 

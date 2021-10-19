@@ -1,31 +1,37 @@
-package org.codingnojam.springbootjpastudy.controller;
+package org.codingnojam.springbootjpastudy.api;
 
 import org.codingnojam.springbootjpastudy.domain.Company;
 import org.codingnojam.springbootjpastudy.domain.Developer;
+import org.codingnojam.springbootjpastudy.repository.CompanyRepository;
 import org.codingnojam.springbootjpastudy.repository.DeveloperRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class DeveloperController {
 
 	private final DeveloperRepository developerRepository;
+	private final CompanyRepository companyRepository;
 
-	@PostMapping("/developer/init")
-	public void initDeveloper() {
+	@GetMapping("/developer-init")
+	public Developer initDeveloper() {
 		Developer developer = new Developer();
 		developer.setAge(30);
 		developer.setName("coding-nojam");
+		log.debug("ddd:{}","ww");
 
 		Company company = new Company();
 		company.setName("woowahan");
+		companyRepository.save(company);
 		developer.setCompany(company);
-		developerRepository.save(developer);
+		Long id = developerRepository.save(developer);
+		return developerRepository.findOneById(id);
 	}
 
 	@GetMapping("/developer/{id}")
