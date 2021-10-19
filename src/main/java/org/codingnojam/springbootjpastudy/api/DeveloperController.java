@@ -30,6 +30,7 @@ public class DeveloperController {
 		company.setName("woowahan");
 		companyRepository.save(company);
 		developer.setCompany(company);
+
 		Long id = developerRepository.save(developer);
 		return developerRepository.findOneById(id);
 	}

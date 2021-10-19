@@ -23,6 +23,4 @@ public class DeveloperRepository {
 		em.persist(developer);
 		return developer.getId();
 	}
-
-
 }

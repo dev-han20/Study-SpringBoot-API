@@ -26,5 +26,4 @@ public class Developer {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Company company;
-
 }
